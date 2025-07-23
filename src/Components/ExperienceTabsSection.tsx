@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Data for the tabs ---
@@ -6,164 +6,151 @@ const tabsData = [
   {
     id: 1,
     title: 'More Google Traffic',
-    subtitle: 'Upgrade your SEO',
-    heading: 'With Owner, your website gets way more Google traffic',
+    superTitle: 'Upgrade your SEO',
+    headline: 'With Owner, your website gets way more Google traffic',
     image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/68099508c0154cdc49f8c9b7_a576e66e2a76a448f0c997ba69bd8d8f_ai-website_item-2.avif',
   },
   {
     id: 2,
     title: 'More Online Sales',
-    subtitle: 'Boost your orders',
-    heading: 'Grow sales with ordering that feels just like the big brands',
+    superTitle: 'Boost your orders',
+    headline: 'Grow sales with ordering that feels just like the big brands',
     image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/680a178dea2dba19951bf646_abc3446dbd78d9103d75cafb2dcfa96d_online-ordering_item-1.avif',
-    phoneImage: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/680a166038a3b80a4a531b2e_online-ordering_item-2.avif',
   },
   {
     id: 3,
     title: 'More Repeat Orders',
-    subtitle: 'Create more regulars',
-    heading: 'Owner uses smart follow-ups that grow your repeat orders',
-    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/681214b6923ef956e00bbe28_3647942429bb2058a6d96e3f71542f42_follow-up.json', // This is a Lottie file, we'll represent it with an image
-    isLottie: true, // We'll use this flag to show a placeholder for the Lottie animation
+    superTitle: 'Create more regulars',
+    headline: 'Owner uses smart follow-ups that grow your repeat orders',
+    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/681214b6923ef956e00bbe28_3647942429bb2058a6d96e3f71542f42_follow-up.json',
   },
   {
     id: 4,
-    title: 'More App Downloads',
-    subtitle: 'Reward your guests',
-    heading: 'Give guests points when they use your branded mobile app',
-    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/680996116d3e8432042125d8_d72b2241f8d486588237730e70b32938_app-downloads_item-1.avif',
+    title: 'App Downloads',
+    superTitle: 'Reward your guests',
+    headline: 'Give guests points when they use your branded mobile app',
+    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/6810a957b420f1350a80e1a1_6e77102e1c950a259d33267568163f58_loyalty.avif',
   },
 ];
 
-const AUTOPLAY_INTERVAL = 5000; // 5 seconds
+// --- SVG Icon Components ---
+const ArrowIcon = ({ className = '' }: { className?: string }) => (
+    <svg className={className} width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.9823 20.4958C16.72 20.7581 16.2952 20.7593 16.0314 20.4985V20.4985C15.7656 20.2356 15.7644 19.8067 16.0288 19.5423L18.8786 16.6926H11.2081C10.8257 16.6926 10.5156 16.3825 10.5156 16.0001V16.0001C10.5156 15.6176 10.8257 15.3076 11.2081 15.3076H18.8786L16.0293 12.463C15.7645 12.1986 15.765 11.7694 16.0303 11.5055V11.5055C16.2944 11.2428 16.7213 11.2434 16.9847 11.5068L21.1959 15.718C21.3517 15.8738 21.3517 16.1264 21.1959 16.2821L16.9823 20.4958Z" fill="currentColor"></path>
+    </svg>
+);
 
-const MoreTrafficSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0);
+// --- Main Component ---
+const ExperienceTabsSection = () => {
+    const [activeTab, setActiveTab] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+    const [progressKey, setProgressKey] = useState(0);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTab((prevTab) => (prevTab + 1) % tabsData.length);
-    }, AUTOPLAY_INTERVAL);
+    const handleNext = () => {
+        setActiveTab((prev) => (prev + 1) % tabsData.length);
+        setProgressKey(prev => prev + 1); // Reset animation
+    };
 
-    return () => clearInterval(timer);
-  }, [activeTab]);
+    const handlePrev = () => {
+        setActiveTab((prev) => (prev - 1 + tabsData.length) % tabsData.length);
+        setProgressKey(prev => prev + 1); // Reset animation
+    };
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
+    useEffect(() => {
+        if (!isPaused) {
+            intervalRef.current = setInterval(handleNext, 7000);
+        }
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
+    }, [activeTab, isPaused]);
+    
+    return (
+        <section className="py-16 md:py-24 font-sans bg-white">
+            <div className="container mx-auto px-4">
+                <div className="max-w-2xl mx-auto text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                        With Owner, you get more traffic, more sales, more repeat customers
+                    </h2>
+                </div>
 
-  const handleNext = () => {
-    setActiveTab((prevTab) => (prevTab + 1) % tabsData.length);
-  };
+                {/* Tab Navigation */}
+                <div className="mb-8">
+                    <div className="flex border-b border-gray-200 overflow-x-auto no-scrollbar">
+                        {tabsData.map((tab, index) => (
+                            <button
+                                key={tab.id}
+                                onClick={() => {
+                                    setActiveTab(index);
+                                    setProgressKey(prev => prev + 1);
+                                }}
+                                className={`flex-1 min-w-[180px] md:min-w-0 py-4 text-sm md:text-base font-semibold focus:outline-none transition-colors ${
+                                    activeTab === index ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+                                }`}
+                            >
+                                <div className="flex items-center justify-center gap-2">
+                                    <span className="opacity-40">{index + 1}</span>
+                                    <span>{tab.title}</span>
+                                </div>
+                                <div className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden relative">
+                                    {activeTab === index && (
+                                        <div
+                                            key={progressKey}
+                                            className={`h-full bg-green-500 rounded-full ${isPaused ? 'animate-paused' : ''}`}
+                                            style={{ animation: `fillProgress 7s linear forwards` }}
+                                        />
+                                    )}
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
-  const handlePrev = () => {
-    setActiveTab((prevTab) => (prevTab - 1 + tabsData.length) % tabsData.length);
-  };
-
-  return (
-    <section className="bg-white py-16 sm:py-24">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            With Owner, you get more traffic, more sales, more repeat customers
-          </h2>
-        </div>
-        
-        {/* Tabs Navigation */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 mb-4">
-          {tabsData.map((tab, index) => (
-            <button
-              key={tab.id}
-              onClick={() => handleTabClick(index)}
-              className="p-3 text-center transition-colors duration-300"
-            >
-              <span className={`text-sm sm:text-base font-medium ${activeTab === index ? 'text-gray-900' : 'text-gray-500'}`}>
-                {index + 1}   {tab.title}
-              </span>
-              <div className="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
-                {activeTab === index && (
-                   <motion.div
-                    key={activeTab} // This key forces re-render and restarts the animation
-                    className="h-full bg-green-500"
-                    initial={{ width: 0 }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: AUTOPLAY_INTERVAL / 1000, ease: 'linear' }}
-                  />
-                )}
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Content Panes */}
-        <div className="relative bg-gray-100 rounded-3xl min-h-[500px] lg:min-h-[600px] overflow-hidden p-8 sm:p-12">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5, type: 'tween' }}
-              className="w-full h-full flex flex-col md:flex-row items-center justify-between"
-            >
-              <div className="w-full md:w-1/3 mb-8 md:mb-0 text-center md:text-left">
-                <p className="text-lg text-gray-500">{tabsData[activeTab].subtitle}</p>
-                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
-                  {tabsData[activeTab].heading}
-                </h3>
-              </div>
-              <div className="w-full md:w-2/3 h-full relative flex items-center justify-center">
-                  {/* Specific layout for Tab 2 */}
-                   {activeTab === 1 ? (
-                     <>
-                        <motion.img
-                           src={tabsData[1].image}
-                           alt={tabsData[1].title}
-                           className="relative z-10 w-full max-w-lg rounded-lg shadow-lg"
-                           initial={{ scale: 0.8, opacity: 0 }}
-                           animate={{ scale: 1, opacity: 1 }}
-                           transition={{ delay: 0.3, duration: 0.5 }}
-                        />
-                        <motion.img
-                           src={tabsData[1].phoneImage}
-                           alt="Phone screen"
-                           className="absolute z-20 w-48 sm:w-64 -left-8 sm:left-0 bottom-0 rounded-lg shadow-2xl"
-                            initial={{ y: 50, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.5, duration: 0.5 }}
-                        />
-                     </>
-                  ) : activeTab === 2 ? (
-                      <div className="bg-blue-100/50 p-8 rounded-2xl backdrop-blur-sm w-full h-80 flex items-center justify-center">
-                         <p className="text-xl text-blue-800 font-semibold">Lottie Animation Placeholder</p>
-                      </div>
-                  ) : (
-                     <img
-                        src={tabsData[activeTab].image}
-                        alt={tabsData[activeTab].title}
-                        className="max-w-full max-h-[400px] object-contain"
-                     />
-                  )}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation Arrows */}
-        <div className="flex justify-center items-center mt-6 text-gray-500">
-           <button onClick={handlePrev} className="flex items-center space-x-2 px-4 py-2 hover:text-gray-900 transition-colors">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-               <span>Previous</span>
-           </button>
-            <span className="mx-4 text-gray-300">|</span>
-           <button onClick={handleNext} className="flex items-center space-x-2 px-4 py-2 hover:text-gray-900 transition-colors">
-               <span>Next</span>
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-           </button>
-        </div>
-      </div>
-    </section>
-  );
+                {/* Content Slider */}
+                <div 
+                    className="relative bg-gray-50 rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden min-h-[500px] md:min-h-[550px] flex items-center"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                >
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeTab}
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -50 }}
+                            transition={{ duration: 0.5, ease: 'easeInOut' }}
+                            className="w-full flex flex-col md:flex-row items-center gap-8 lg:gap-16"
+                        >
+                            <div className="w-full md:w-2/5 text-center md:text-left">
+                                <p className="text-lg md:text-xl font-semibold text-gray-500 mb-2">{tabsData[activeTab].superTitle}</p>
+                                <p className="text-2xl md:text-3xl font-bold text-gray-900">{tabsData[activeTab].headline}</p>
+                            </div>
+                            <div className="w-full md:w-3/5">
+                                <img
+                                    src={tabsData[activeTab].image}
+                                    alt={tabsData[activeTab].title}
+                                    className="rounded-xl shadow-2xl object-cover w-full h-auto"
+                                />
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+                
+                {/* Navigation Arrows */}
+                <div className="flex justify-center md:justify-end items-center gap-6 mt-8">
+                     <button onClick={handlePrev} className="flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-50" aria-label="Previous slide">
+                        <ArrowIcon className="w-6 h-6 transform rotate-180" />
+                        <span className="hidden md:inline text-sm font-semibold">Previous</span>
+                    </button>
+                    <button onClick={handleNext} className="flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-50" aria-label="Next slide">
+                        <span className="hidden md:inline text-sm font-semibold">Next</span>
+                        <ArrowIcon className="w-6 h-6" />
+                    </button>
+                </div>
+            </div>
+        </section>
+    );
 };
 
-export default MoreTrafficSection;
+export default ExperienceTabsSection;
