@@ -88,3 +88,44 @@
         transform: none !important; /* Prevents Swiper's transform from interfering if needed */
     }
 }
+
+body {
+  background-color: #f2f0ed; /* Light beige background */
+  color: #090A0B;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom styles for marquee hover effect */
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+/* Incorrect */
+@media {
+  .my-class {
+    display: none;
+  }
+}
+
+/* Correct */
+@media (max-width: 767px) {
+  .my-class {
+    display: none;
+  }
+}
+/* Incorrect (prefix only) */
+.my-text-element {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+/* Correct (with standard property) */
+.my-text-element {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* Add this line */
+}
