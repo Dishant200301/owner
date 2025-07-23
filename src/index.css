@@ -1,13 +1,90 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS for prediction list from original HTML embed */
+.predictions-container-style {
+  position: absolute;
+  padding: 0.6rem;
+  bottom: 100%; /* Position above the input */
+  left: 0;
+  width: 100%;
+  margin-bottom: 1.2rem;
+  max-height: 24rem;
+  overflow-y: auto;
+  background: white;
+  border-radius: 1.2rem;
+  z-index: 10000;
+  box-shadow: 0px 10px 16px -3px rgba(20, 21, 26, 0.08), 0px 3px 6px -2px rgba(20, 21, 26, 0.05);
+  border: 1px solid #DEE0E3;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.prediction-item-style {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  margin: 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+}
+
+.prediction-item-style:hover,
+.prediction-item-style.selected {
+  background-color: #f1f1f2;
+}
+
+.prediction-item-style:hover .secondary-text-style,
+.prediction-item-style.selected .secondary-text-style {
+  color: #f3f4f6; /* Use defined custom colors from tailwind.config.js */
+}
+
+/* Main and secondary text styles for predictions */
+.main-text-style {
+  display: block;
+  font-weight: 500;
+}
+
+.secondary-text-style {
+  display: block;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.hp-owners_row {
+    width: fit-content; /* Allows the flex container to size to its content */
+    min-width: 200%; /* Important for the translateX(-50%) animation to loop correctly */
+}
+
+/* Pause animation on hover: When the parent group is hovered, pause the animation of its child .hp-owners_row */
+.group:hover > .hp-owners_row {
+    animation-play-state: paused;
+}
+
+.swiper-slide-active .exp-tabs_tabs-progress-line {
+    animation: fillDot 7s linear forwards;
+    transform-origin: left; /* Ensure it scales from left to right */
+}
+
+.exp-tabs_tabs-progress-line {
+    /* Default state for inactive bars */
+    transform: scaleX(0);
+    transition: transform 0.3s ease; /* Smooth transition for reset */
+}
+
+/* When a slide stops being active, its animation should stop and reset */
+.swiper-slide:not(.swiper-slide-active) .exp-tabs_tabs-progress-line {
+    animation: none;
+    transform: scaleX(0);
+}
+
+/* The original HTML had specific overrides for Swiper menu wrapper */
+/* While Swiper handles this internally, sometimes direct overrides are necessary */
+@media only screen and (min-width: 992px) {
+    .swiper-wrapper.exp-tabs-menu {
+        transform: none !important; /* Prevents Swiper's transform from interfering if needed */
+    }
 }
