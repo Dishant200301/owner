@@ -2,18 +2,18 @@ import React from 'react'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './Pages/HomePage'
-import { MainHeader } from './Components/navigation/MainHeader'
 import OurStoryPages from './Pages/OurStoryPages';
 import PricingPage from './Pages/PricingPage';
 import HowOwnerWorks from './Pages/HowOwnerWorks';
 import Footer from './Components/Footer';
 import RestaurantWebsiteAi from './Pages/RestaurantWebsiteAi';
+import Header from './Components/navigation/Header';
 
 export default function App() {
   return (
     <>
      <Router>
-    <MainHeader />
+    <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/our-story" element={<OurStoryPages />} />

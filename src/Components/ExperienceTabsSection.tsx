@@ -1,156 +1,191 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
-// --- Data for the tabs ---
+// Import Swiper for the slider functionality
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css'; // Core Swiper styles
+import type { Swiper as SwiperType } from 'swiper'; // Type for Swiper instance
+
+// --- Data Structure with Precise Visual Layouts ---
+// This data reflects the exact layers and images from the screenshots provided.
 const tabsData = [
   {
     id: 1,
     title: 'More Google Traffic',
-    superTitle: 'Upgrade your SEO',
-    headline: 'With Owner, your website gets way more Google traffic',
-    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/68099508c0154cdc49f8c9b7_a576e66e2a76a448f0c997ba69bd8d8f_ai-website_item-2.avif',
+    subtitle: 'Upgrade your SEO',
+    description: 'With Owner, your website gets way more Google traffic',
+    visuals: {
+      background: 'https://assets-global.website-files.com/66643a14df53b71d1ed72d08/6809930e4b75f859553c9b74_bg-seo.png',
+      foreground: [
+        {
+          src: 'https://i.imgur.com/qB41aG1.png', // Static image of the search bar UI
+          className: 'absolute z-10 w-[24rem] -top-10 left-10 opacity-90',
+        },
+        {
+          src: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/68099508c0154cdc49f8c9b7_a576e66e2a76a448f0c997ba69bd8d8f_ai-website_item-2.avif',
+          className: 'relative z-20 w-48 md:w-56 mt-16 rounded-2xl shadow-2xl',
+        },
+      ],
+    },
   },
   {
     id: 2,
     title: 'More Online Sales',
-    superTitle: 'Boost your orders',
-    headline: 'Grow sales with ordering that feels just like the big brands',
-    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/680a178dea2dba19951bf646_abc3446dbd78d9103d75cafb2dcfa96d_online-ordering_item-1.avif',
+    subtitle: 'Boost your orders',
+    description: 'Grow sales with ordering that feels just like the big brands',
+    visuals: {
+      background: 'https://assets-global.website-files.com/66643a14df53b71d1ed72d08/680a18239050d27572d1f97c_bg-ordering.png',
+      foreground: [
+        {
+          src: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/680a178dea2dba19951bf646_abc3446dbd78d9103d75cafb2dcfa96d_online-ordering_item-1.avif',
+          className: 'absolute z-10 w-[30rem] top-0 right-0 rounded-lg shadow-xl',
+        },
+        {
+          src: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/680a166038a3b80a4a531b2e_online-ordering_item-2.avif',
+          className: 'relative z-20 w-48 md:w-56 rounded-2xl shadow-2xl mr-32',
+        },
+      ],
+    },
   },
   {
     id: 3,
     title: 'More Repeat Orders',
-    superTitle: 'Create more regulars',
-    headline: 'Owner uses smart follow-ups that grow your repeat orders',
-    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/681214b6923ef956e00bbe28_3647942429bb2058a6d96e3f71542f42_follow-up.json',
+    subtitle: 'Create more regulars',
+    description: 'Owner uses smart follow-ups that grow your repeat orders',
+    visuals: {
+      background: 'https://i.imgur.com/kS5ChIn.png', // Faded blue gradient background
+      foreground: [
+        {
+          src: 'https://i.imgur.com/Gch601g.png', // Static image of the user journey
+          className: 'w-full h-full object-contain',
+        },
+      ],
+    },
   },
   {
     id: 4,
-    title: 'App Downloads',
-    superTitle: 'Reward your guests',
-    headline: 'Give guests points when they use your branded mobile app',
-    image: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/6810a957b420f1350a80e1a1_6e77102e1c950a259d33267568163f58_loyalty.avif',
+    title: 'More App Downloads',
+    subtitle: 'Reward your guests',
+    description: 'Give guests points when they use your branded mobile app',
+    visuals: {
+      background: 'https://assets-global.website-files.com/66643a14df53b71d1ed72d08/6809907f1f96435948a3a0e6_bg-rewards.png',
+      foreground: [
+        {
+          src: 'https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/68099042b7c07e9975a59a72_1b44c664585f94b4802c63836d933331_rewards_item-1.avif',
+          className: 'w-48 md:w-56 rounded-2xl shadow-2xl',
+        },
+      ],
+    },
   },
 ];
 
-// --- SVG Icon Components ---
-const ArrowIcon = ({ className = '' }: { className?: string }) => (
-    <svg className={className} width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.9823 20.4958C16.72 20.7581 16.2952 20.7593 16.0314 20.4985V20.4985C15.7656 20.2356 15.7644 19.8067 16.0288 19.5423L18.8786 16.6926H11.2081C10.8257 16.6926 10.5156 16.3825 10.5156 16.0001V16.0001C10.5156 15.6176 10.8257 15.3076 11.2081 15.3076H18.8786L16.0293 12.463C15.7645 12.1986 15.765 11.7694 16.0303 11.5055V11.5055C16.2944 11.2428 16.7213 11.2434 16.9847 11.5068L21.1959 15.718C21.3517 15.8738 21.3517 16.1264 21.1959 16.2821L16.9823 20.4958Z" fill="currentColor"></path>
-    </svg>
-);
+// --- The React Component ---
+const ExperienceTabs: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef<SwiperType | null>(null);
 
-// --- Main Component ---
-const ExperienceTabsSection = () => {
-    const [activeTab, setActiveTab] = useState(0);
-    const [isPaused, setIsPaused] = useState(false);
-    const [progressKey, setProgressKey] = useState(0);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const handleTabClick = (index: number) => {
+    setActiveIndex(index);
+    swiperRef.current?.slideToLoop(index); // Use slideToLoop for infinite sliders
+  };
+  
+  return (
+    <section className="font-sans antialiased text-[#1a1a1a]">
+      <div className="px-4 py-16 mx-auto sm:px-6 lg:px-8 lg:py-24 max-w-7xl">
+        <div className="max-w-xl mx-auto text-center lg:max-w-3xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.5rem] leading-tight">
+            With Owner, you get more traffic, more sales, more repeat customers
+          </h2>
+        </div>
 
-    const handleNext = () => {
-        setActiveTab((prev) => (prev + 1) % tabsData.length);
-        setProgressKey(prev => prev + 1); // Reset animation
-    };
-
-    const handlePrev = () => {
-        setActiveTab((prev) => (prev - 1 + tabsData.length) % tabsData.length);
-        setProgressKey(prev => prev + 1); // Reset animation
-    };
-
-    useEffect(() => {
-        if (!isPaused) {
-            intervalRef.current = setInterval(handleNext, 7000);
-        }
-        return () => {
-            if (intervalRef.current) clearInterval(intervalRef.current);
-        };
-    }, [activeTab, isPaused]);
-    
-    return (
-        <section className="py-16 md:py-24 font-sans bg-white">
-            <div className="container mx-auto px-4">
-                <div className="max-w-2xl mx-auto text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                        With Owner, you get more traffic, more sales, more repeat customers
-                    </h2>
-                </div>
-
-                {/* Tab Navigation */}
-                <div className="mb-8">
-                    <div className="flex border-b border-gray-200 overflow-x-auto no-scrollbar">
-                        {tabsData.map((tab, index) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => {
-                                    setActiveTab(index);
-                                    setProgressKey(prev => prev + 1);
-                                }}
-                                className={`flex-1 min-w-[180px] md:min-w-0 py-4 text-sm md:text-base font-semibold focus:outline-none transition-colors ${
-                                    activeTab === index ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
-                                }`}
-                            >
-                                <div className="flex items-center justify-center gap-2">
-                                    <span className="opacity-40">{index + 1}</span>
-                                    <span>{tab.title}</span>
-                                </div>
-                                <div className="mt-3 h-1 bg-gray-200 rounded-full overflow-hidden relative">
-                                    {activeTab === index && (
-                                        <div
-                                            key={progressKey}
-                                            className={`h-full bg-green-500 rounded-full ${isPaused ? 'animate-paused' : ''}`}
-                                            style={{ animation: `fillProgress 7s linear forwards` }}
-                                        />
-                                    )}
-                                </div>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Content Slider */}
-                <div 
-                    className="relative bg-gray-50 rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden min-h-[500px] md:min-h-[550px] flex items-center"
-                    onMouseEnter={() => setIsPaused(true)}
-                    onMouseLeave={() => setIsPaused(false)}
+        <div className="mt-16">
+          {/* Tab Menu */}
+          <div className="flex justify-center mb-8 border-b border-gray-200">
+            <div className="flex flex-col w-full max-w-4xl sm:flex-row">
+              {tabsData.map((tab, index) => (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabClick(index)}
+                  className="relative flex-1 px-4 py-3 text-base font-medium text-center transition-colors duration-300"
                 >
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={activeTab}
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -50 }}
-                            transition={{ duration: 0.5, ease: 'easeInOut' }}
-                            className="w-full flex flex-col md:flex-row items-center gap-8 lg:gap-16"
-                        >
-                            <div className="w-full md:w-2/5 text-center md:text-left">
-                                <p className="text-lg md:text-xl font-semibold text-gray-500 mb-2">{tabsData[activeTab].superTitle}</p>
-                                <p className="text-2xl md:text-3xl font-bold text-gray-900">{tabsData[activeTab].headline}</p>
-                            </div>
-                            <div className="w-full md:w-3/5">
-                                <img
-                                    src={tabsData[activeTab].image}
-                                    alt={tabsData[activeTab].title}
-                                    className="rounded-xl shadow-2xl object-cover w-full h-auto"
-                                />
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-                
-                {/* Navigation Arrows */}
-                <div className="flex justify-center md:justify-end items-center gap-6 mt-8">
-                     <button onClick={handlePrev} className="flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-50" aria-label="Previous slide">
-                        <ArrowIcon className="w-6 h-6 transform rotate-180" />
-                        <span className="hidden md:inline text-sm font-semibold">Previous</span>
-                    </button>
-                    <button onClick={handleNext} className="flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-50" aria-label="Next slide">
-                        <span className="hidden md:inline text-sm font-semibold">Next</span>
-                        <ArrowIcon className="w-6 h-6" />
-                    </button>
-                </div>
+                  <div className={`flex items-center justify-center space-x-3 ${
+                      activeIndex === index ? 'text-gray-900' : 'text-gray-500 hover:text-gray-800'
+                    }`}>
+                    <span className="opacity-40">{tab.id}</span>
+                    <p>{tab.title}</p>
+                  </div>
+                  <div className="absolute bottom-[-1px] left-0 w-full h-0.5">
+                    {activeIndex === index && (
+                      <motion.div
+                        className="h-full bg-gray-900"
+                        style={{ transformOrigin: 'left' }}
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 7, ease: 'linear' }}
+                        key={activeIndex} // Reset animation when activeIndex changes
+                      />
+                    )}
+                  </div>
+                </button>
+              ))}
             </div>
-        </section>
-    );
+          </div>
+
+          {/* Swiper Content */}
+          <div className="relative">
+            <Swiper
+              modules={[Navigation]}
+              onSwiper={(swiper: SwiperType) => (swiperRef.current = swiper)}
+              onSlideChange={(swiper:SwiperType) => setActiveIndex(swiper.realIndex)}
+              loop={true} // Enables infinite looping
+              navigation={{
+                nextEl: '.exp-arrow-next',
+                prevEl: '.exp-arrow-prev',
+              }}
+              className="w-full"
+            >
+              {tabsData.map((tab) => (
+                <SwiperSlide key={tab.id}>
+                  <div className="overflow-hidden bg-gray-100 rounded-2xl">
+                    <div className="grid items-center grid-cols-1 lg:grid-cols-2 min-h-[500px] lg:min-h-[480px]">
+                      {/* Text Content */}
+                      <div className="px-8 py-12 text-center lg:px-12 lg:text-left">
+                        <p className="text-xl font-medium text-gray-500 md:text-2xl">{tab.subtitle}</p>
+                        <p className="mt-2 text-2xl font-bold leading-tight text-gray-900 md:text-3xl lg:text-4xl">{tab.description}</p>
+                      </div>
+                      
+                      {/* Visual Content */}
+                      <div
+                        className="relative flex items-center justify-center w-full h-80 lg:h-full"
+                        style={{ backgroundImage: `url(${tab.visuals.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                      >
+                        {tab.visuals.foreground.map((visual, idx) => (
+                          <img key={idx} src={visual.src} alt={`${tab.title} asset ${idx + 1}`} className={visual.className} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            
+            {/* Custom Navigation (at the bottom) */}
+            <div className="flex items-center justify-center mt-8 space-x-12">
+              <button className="flex items-center space-x-2 text-gray-500 exp-arrow-prev group hover:text-gray-900 transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                  <span className="text-base font-medium">Previous</span>
+              </button>
+              <button className="flex items-center space-x-2 text-gray-500 exp-arrow-next group hover:text-gray-900 transition-colors">
+                  <span className="text-base font-medium">Next</span>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-export default ExperienceTabsSection;
+export default ExperienceTabs;
