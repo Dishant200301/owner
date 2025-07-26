@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // SVG components for arrows and play icon (reusing from previous tasks)
 const ArrowTailIcon: React.FC = () => (
@@ -38,20 +39,20 @@ const GuidesSection: React.FC = () => {
             {/* The original code has `hide-mobile-landscape` which implies showing on larger screens. */}
             {/* Replicated using `hidden lg:block` to show only on large screens and above. */}
             <div className="hidden lg:block mt-8"> {/* hide-mobile-landscape */}
-              <a href="#" className="inline-flex items-center justify-center space-x-2 px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-200"> {/* button w-inline-block */}
+              <Link to="#" className="inline-flex items-center justify-center space-x-2 px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-200"> {/* button w-inline-block */}
                 <p>Read the blog</p>
                 <div className="flex items-center space-x-1">
                   <div className="w-4 h-auto"><ArrowTailIcon /></div>
                   <div className="w-3 h-auto"><ArrowHeadIcon /></div>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
 
           {/* Guides Visual Wrap */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 w-full lg:w-2/3"> {/* guides_visual-wrap */}
             {/* Guide 1: YouTube Video */}
-            <a href="https://www.youtube.com/watch?v=dJB-ATZaxM0" target="_blank" rel="noopener noreferrer" className="relative block aspect-video rounded-2xl overflow-hidden shadow-lg group"> {/* guides_visual develivery w-inline-block */}
+            <Link to="https://www.youtube.com/watch?v=dJB-ATZaxM0" target="_blank" rel="noopener noreferrer" className="relative block aspect-video rounded-2xl overflow-hidden shadow-lg group"> {/* guides_visual develivery w-inline-block */}
               <img
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" /* img-cover link-image */
                 src="https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/668fda6309b0381d246fcd29_rank-1_youtube.jpg"
@@ -68,10 +69,10 @@ const GuidesSection: React.FC = () => {
                   <PlayIcon />
                 </div>
               </div>
-            </a>
+            </Link>
 
             {/* Guide 2: Blog Post */}
-            <a href="https://www.owner.com/blog/website-builders-for-restaurants" target="_blank" rel="noopener noreferrer" className="relative block aspect-video rounded-2xl overflow-hidden shadow-lg group"> {/* guides_block w-inline-block */}
+            <Link to="https://www.owner.com/blog/website-builders-for-restaurants" target="_blank" rel="noopener noreferrer" className="relative block aspect-video rounded-2xl overflow-hidden shadow-lg group"> {/* guides_block w-inline-block */}
               <img
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" /* img-cover link-image */
                 src="https://cdn.prod.website-files.com/66643a14df53b71d1ed72d08/668fda668c6beb76e3104f8a_best-restaraunant-website-builders.jpg"
@@ -85,7 +86,7 @@ const GuidesSection: React.FC = () => {
                   Buyer's Guide: The Best Website Builders for Restaurants
                 </p>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

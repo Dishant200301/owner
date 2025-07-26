@@ -10,7 +10,6 @@
   left: 0;
   width: 100%;
   margin-bottom: 1.2rem;
-  max-height: 24rem;
   overflow-y: auto;
   background: white;
   border-radius: 1.2rem;
@@ -102,18 +101,14 @@ body {
 }
 
 /* Incorrect */
-@media {
+/* @media {
   .my-class {
     display: none;
   }
-}
+} */
 
 /* Correct */
-@media (max-width: 767px) {
-  .my-class {
-    display: none;
-  }
-}
+
 /* Incorrect (prefix only) */
 .my-text-element {
   overflow: hidden;

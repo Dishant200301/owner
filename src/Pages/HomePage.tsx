@@ -1,12 +1,12 @@
 import React from 'react';
 import OwnersSection from '../Components/OwnersSection';
-import RestaurantReviews from '../Components/Review/RestaurantReviews';
 import GuidesSection from '../Components/GuidesSection';
 import BeliefsSection from '../Components/Home/BeliefsSection';
 import TestimonialsCarousel from '../Components/prisecing/TestimonialsCarousel';
 import ExperienceTabsSection from '../Components/ExperienceTabsSection';
 import RestaurantGrader from '../Components/grader/SectionHpGrader';
 import Testimonials from '../Components/Home/TestimonialsSection';
+import ReviewsSection from '../Components/Review/RestaurantReviews';
 
 function HomePage() {
   return (
@@ -16,7 +16,7 @@ function HomePage() {
         <RestaurantGrader />
         <OwnersSection /> 
         <ExperienceTabsSection /> 
-        <RestaurantReviews/>
+        <ReviewsSection/>
         <Testimonials/> 
         <TestimonialsCarousel/>
         <BeliefsSection/>

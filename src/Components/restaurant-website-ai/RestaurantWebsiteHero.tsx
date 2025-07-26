@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react';
 // SVG components for arrows and play icon
 const ArrowTailIcon: React.FC = () => (
   <svg width="100%" height="100%" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 1L1 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
   </svg>
 );
 
@@ -64,14 +63,14 @@ const RestaurantWebsiteHero: React.FC = () => {
               <a href="/demo" className="inline-flex items-center justify-center space-x-2 px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-200"> {/* button */}
                 <p>Get a free demo</p>
                 <div className="flex items-center space-x-1">
-                  <div className="w-4 h-auto"><ArrowTailIcon /></div>
+                  <div className="w-1 h-auto"><ArrowTailIcon /></div>
                   <div className="w-3 h-auto"><ArrowHeadIcon /></div>
                 </div>
               </a>
               <a href="/pricing" className="inline-flex items-center justify-center space-x-2 px-8 py-4 bg-gray-200 text-gray-800 text-lg font-semibold rounded-full shadow-lg hover:bg-gray-300 transition-colors duration-200"> {/* button is-secondary */}
                 <p>View Pricing</p>
                 <div className="flex items-center space-x-1">
-                  <div className="w-4 h-auto"><ArrowTailIcon /></div>
+                  <div className="w-1 h-auto"><ArrowTailIcon /></div>
                   <div className="w-3 h-auto"><ArrowHeadIcon /></div>
                 </div>
               </a>

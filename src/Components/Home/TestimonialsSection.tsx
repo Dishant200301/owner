@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // --- TYPE DEFINITIONS for props and data ---
 interface TestimonialStat {
@@ -198,9 +199,9 @@ const Testimonials: React.FC = () => {
                                             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">{testimonial.ownerName}</h2>
                                             <p className="text-lg md:text-xl text-gray-600">Owner of {testimonial.restaurantName}</p>
                                         </div>
-                                        <a href="#" className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transition-colors whitespace-nowrap">
+                                        <Link to="#" className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transition-colors whitespace-nowrap">
                                             See all reviews
-                                        </a>
+                                        </Link>
                                     </div>
                                     <blockquote className="my-6">
                                         <p className="text-base md:text-lg text-gray-700 leading-relaxed">
@@ -217,9 +218,9 @@ const Testimonials: React.FC = () => {
                                             </li>
                                         ))}
                                     </ul>
-                                    <a href="#" className="mt-8 lg:hidden inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transition-colors">
+                                    <Link to="#" className="mt-8 lg:hidden inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white font-semibold rounded-full hover:bg-gray-800 transition-colors">
                                         See all reviews
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             {/* --- Right Column: Video --- */}

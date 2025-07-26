@@ -1,14 +1,9 @@
-// src/types.ts
-import React from 'react';
-
-export interface ReviewPlatform {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  text: string;
-}
-
 export interface Review {
-  id: string;
+  id: number;
+  rating: number;
   text: string;
-  avatarSrc: string;
-  author: string;
+  author: {
+    name: string;
+    avatarUrl: string;
+  };
 }

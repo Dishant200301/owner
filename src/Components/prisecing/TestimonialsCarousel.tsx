@@ -6,6 +6,7 @@ import saidImage from '../../assets/said-hofiani.jpg';
 import rahulImage from '../../assets/rahul-bhatia.jpg';
 import JayImage from '../../assets/jay-saadat.png';
 import hiroyukiImage from '../../assets/hiroyuki-aidi.png';
+import { Link } from 'react-router-dom';
 
 // --- Data Structure Interfaces ---
 interface Stat {
@@ -222,9 +223,9 @@ const TestimonialsCarousel = () => {
                           </div>
                         ))}
                       </div>
-                      <a href={testimonial.storyLink} className={`bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-sm py-2 px-4 md:py-3 md:px-5 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap self-end ${shouldAnimate ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '300ms' }}>
+                      <Link to={testimonial.storyLink} className={`bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold text-sm py-2 px-4 md:py-3 md:px-5 rounded-full transition-colors flex items-center gap-2 whitespace-nowrap self-end ${shouldAnimate ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '300ms' }}>
                         See story
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
