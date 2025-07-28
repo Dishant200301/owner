@@ -9,9 +9,10 @@ import Footer from './Components/Footer';
 import RestaurantWebsiteAi from './Pages/RestaurantWebsiteAi';
 import Header from './Components/navigation/Header';
 import BlogPage from './Pages/BlogPage';
-import Restaurant_promotion_ideas from './Pages/Restaurant_promotion_ideas';
 import ReviewPage from './Pages/ReviewPage';
 import ReleasesPage from './Pages/ReleasesPage';
+import CaseStudies from './Components/CaseStudies/CaseStudies';
+import RestaurantPromotionIdeas from './Pages/RestaurantPromotionIdeas';
 
 export default function App() {
   return (
@@ -25,9 +26,10 @@ export default function App() {
         <Route path="/how-owner-works" element={<HowOwnerWorks />} />
         <Route path="/restaurant-website-ai" element={<RestaurantWebsiteAi />} />
         <Route path="/blog" element={<BlogPage />} />
-        <Route path="/restaurant-promotion-ideas" element={<Restaurant_promotion_ideas />} />
+        <Route path="/restaurant-promotion-ideas" element={<RestaurantPromotionIdeas />} />
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/releases" element={<ReleasesPage />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
       </Routes>
       <Footer />
     </Router>
