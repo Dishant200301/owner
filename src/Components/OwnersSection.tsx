@@ -140,11 +140,11 @@ const TrustedOwnersSection: React.FC = () => {
             </div>
           </div>
           {/* Second Row - reversed */}
-          <div className="flex">
+          {/* <div className="flex">
             <div className="flex animate-marquee">
               <MarqueeRow owners={extendedReversedData} />
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </>

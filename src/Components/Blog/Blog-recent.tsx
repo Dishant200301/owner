@@ -3,7 +3,7 @@ import React from "react";
 const BlogRecent: React.FC = () => {
   return (
     <>
-      <section className="section_blog-recent">
+      <section section-full className="section_blog-recent">
         <div className="padding-global">
           <div className="container-large">
             <div className="blog-recent">
@@ -22,8 +22,8 @@ const BlogRecent: React.FC = () => {
                         >
                           <div className="blog-recent_list-item_visual">
                             <img
-                              
-                              alt="an pos system inside of a coffee shop"
+                              link-image
+                              alt="an image of a pos system inside of a coffee shop"
                               src="https://cdn.prod.website-files.com/666eec3edcc552b5eecc7fcd/6862c5805423b1afc5a7bc2a_cafe-pos-hero.jpg"
                               loading="lazy"
                               sizes="100vw"
@@ -63,8 +63,8 @@ const BlogRecent: React.FC = () => {
                         >
                           <div className="blog-recent_list-item_visual">
                             <img
-                              
-                              alt="A someone using a Square alternative POS system."
+                              link-image
+                              alt="A picture of someone using a Square alternative POS system."
                               src="https://cdn.prod.website-files.com/666eec3edcc552b5eecc7fcd/6862bc69f8a34b0a9102e493_square-alternatives-hero.jpg"
                               loading="lazy"
                               sizes="100vw"
@@ -104,8 +104,8 @@ const BlogRecent: React.FC = () => {
                         >
                           <div className="blog-recent_list-item_visual">
                             <img
-                              
-                              alt="A person at a pizzeria using a POS system"
+                              link-image
+                              alt="A photo of a person at a pizzeria using a POS system"
                               src="https://cdn.prod.website-files.com/666eec3edcc552b5eecc7fcd/6862a45ff0914ff30bc177c7_pizza-pos-system-thumbnail.jpg"
                               loading="lazy"
                               sizes="100vw"
@@ -203,7 +203,8 @@ const BlogRecent: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="blog-recent_hs-form w-embed w-script"></div>
+                    <div className="blog-recent_hs-form w-embed w-script">
+\                    </div>
                   </div>
                 </div>
               </div>

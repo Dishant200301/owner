@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+.swiper-slide {
+  max-width: 360px;
+}
+h1 {
+  margin-top: 0; /* Upar se koi gap nahi (0px) */
+  margin-bottom: 0; /* Neeche se bhi koi gap nahi (0px) */
+  font-size: 5.6rem; /* Font ka size 5.6rem (~89.6px hota hai if root = 16px) */
+  font-weight: 700; /* Bold text (700 = bold) */
+  line-height: 1.2; /* Line height: 1.2x of font-size, text ke vertical spacing ke liye */
+}
+.container-large {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .swiper-slide {
+    width: calc(100% / 3 - 20px);
+  }
+}
+
+.image.absolute {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 /* Custom CSS for prediction list from original HTML embed */
 .predictions-container-style {
   position: absolute;
@@ -14,8 +41,9 @@
   background: white;
   border-radius: 1.2rem;
   z-index: 10000;
-  box-shadow: 0px 10px 16px -3px rgba(20, 21, 26, 0.08), 0px 3px 6px -2px rgba(20, 21, 26, 0.05);
-  border: 1px solid #DEE0E3;
+  box-shadow: 0px 10px 16px -3px rgba(20, 21, 26, 0.08),
+    0px 3px 6px -2px rgba(20, 21, 26, 0.05);
+  border: 1px solid #dee0e3;
 }
 
 .prediction-item-style {
@@ -54,43 +82,43 @@
 }
 
 .hp-owners_row {
-    width: fit-content; /* Allows the flex container to size to its content */
-    min-width: 200%; /* Important for the translateX(-50%) animation to loop correctly */
+  width: fit-content; /* Allows the flex container to size to its content */
+  min-width: 200%; /* Important for the translateX(-50%) animation to loop correctly */
 }
 
 /* Pause animation on hover: When the parent group is hovered, pause the animation of its child .hp-owners_row */
 .group:hover > .hp-owners_row {
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 .swiper-slide-active .exp-tabs_tabs-progress-line {
-    animation: fillDot 7s linear forwards;
-    transform-origin: left; /* Ensure it scales from left to right */
+  animation: fillDot 7s linear forwards;
+  transform-origin: left; /* Ensure it scales from left to right */
 }
 
 .exp-tabs_tabs-progress-line {
-    /* Default state for inactive bars */
-    transform: scaleX(0);
-    transition: transform 0.3s ease; /* Smooth transition for reset */
+  /* Default state for inactive bars */
+  transform: scaleX(0);
+  transition: transform 0.3s ease; /* Smooth transition for reset */
 }
 
 /* When a slide stops being active, its animation should stop and reset */
 .swiper-slide:not(.swiper-slide-active) .exp-tabs_tabs-progress-line {
-    animation: none;
-    transform: scaleX(0);
+  animation: none;
+  transform: scaleX(0);
 }
 
 /* The original HTML had specific overrides for Swiper menu wrapper */
 /* While Swiper handles this internally, sometimes direct overrides are necessary */
 @media only screen and (min-width: 992px) {
-    .swiper-wrapper.exp-tabs-menu {
-        transform: none !important; /* Prevents Swiper's transform from interfering if needed */
-    }
+  .swiper-wrapper.exp-tabs-menu {
+    transform: none !important; /* Prevents Swiper's transform from interfering if needed */
+  }
 }
 
 body {
   background-color: #f2f0ed; /* Light beige background */
-  color: #090A0B;
+  color: #090a0b;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
