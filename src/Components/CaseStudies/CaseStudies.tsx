@@ -52,7 +52,7 @@ const testimonialsData: Testimonial[] = [
     ownerName: "John & Sam",
     restaurantName: "Owners at Metro Pizza",
     storyUrl: "#",
-    videoUrl: "https://www.youtube.com/embed/SZEflIVnhH8", // Example Video URL
+    videoUrl: "https://player.vimeo.com/progressive_redirect/playback/856612612/rendition/1080p/file.mp4?loc=external&signature=58132f9a67b9bb449a424c47d2cf44c8a22c0b979de6b6f264c3a2279219e59e", // Example Video URL
   },
   {
     id: 2,
