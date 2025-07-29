@@ -13,6 +13,7 @@ import ReviewPage from './Pages/ReviewPage';
 import ReleasesPage from './Pages/ReleasesPage';
 import CaseStudies from './Components/CaseStudies/CaseStudies';
 import RestaurantPromotionIdeas from './Pages/RestaurantPromotionIdeas';
+import Series_CPage from './Pages/Series_CPage';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/releases" element={<ReleasesPage />} />
         <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/c" element={<Series_CPage />} />
       </Routes>
       <Footer />
     </Router>
